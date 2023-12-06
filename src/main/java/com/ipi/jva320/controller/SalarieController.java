@@ -1,12 +1,31 @@
 package com.ipi.jva320.controller;
 
+import java.time.LocalDate;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
+import com.ipi.jva320.model.SalarieAideADomicile;
+import com.ipi.jva320.service.SalarieAideADomicileService;
+
 
 @Controller
 public class SalarieController {
-    @GetMapping(value = "/salaries/1")
-    public String Salarie(){
+    private SalarieAideADomicile sad;
+    private SalarieAideADomicileService sas;
+    @GetMapping(value = "/salaries/{id}")
+    public String Salarie(final ModelMap model, @PathVariable String id){
+        sad = sas.getSalarie(Long.parseLong(id));
+        model.put("id", sad.getId());
+        model.put("nom", sad.getNom());
+        model.put("joursTravaillesAnneeN", sad.getJoursTravaillesAnneeN());
+        model.put("congesPayesAcquisAnneeN", sad.getCongesPayesAcquisAnneeN());
+        model.put("congesPayesPris", sad.getCongesPayesPris());
+        model.put("joursTravaillesAnneeNMoins1", sad.getJoursTravaillesAnneeNMoins1());
+        model.put("moisEnCours", sad.getMoisEnCours());
+        model.put("moisDebutContrat", sad.getMoisDebutContrat());
         return "detail_Salarie";
     }
 }
