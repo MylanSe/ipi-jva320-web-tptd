@@ -2,6 +2,7 @@ package com.ipi.jva320.controller;
 
 import java.time.LocalDate;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,11 +14,12 @@ import com.ipi.jva320.service.SalarieAideADomicileService;
 
 @Controller
 public class SalarieController {
-    private SalarieAideADomicile sad;
+    @Autowired
+    
     private SalarieAideADomicileService sas;
     @GetMapping(value = "/salaries/{id}")
     public String Salarie(final ModelMap model, @PathVariable String id){
-        sad = sas.getSalarie(Long.parseLong(id));
+        SalarieAideADomicile sad = sas.getSalarie(Long.parseLong(id));
         model.put("id", sad.getId());
         model.put("nom", sad.getNom());
         model.put("joursTravaillesAnneeN", sad.getJoursTravaillesAnneeN());
